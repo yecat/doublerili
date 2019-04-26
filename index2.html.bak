@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh">
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+  <title>双日历</title> 
+
+  <!-- 图标 -->
+  <link rel="stylesheet" type="text/css" href="./iconfont.css" /> 
+
+  <!-- 图标 -->
+  <link rel="stylesheet" type="text/css" href="./daterangepicker.css?v=123" /> 
+  <!-- 图标 -->
+  <script type="text/javascript" src="./jquery-1.11.1.min.js"></script> 
+  <!-- 图标 -->
+  <script type="text/javascript" src="./moment.js"></script> 
+  <!-- 图标 -->
+  <script type="text/javascript" src="./daterangepicker1.js?v=435435345"></script> 
+
+<style>
+.dropdown-menu{
+	display:none;
+}
+</style>
+
+ </head> 
+ <body> 
+ 
+ <!--
+<button type="button" class="btn btn-default" id="daterange-btn"> 
+	<span>
+		<i class="icon iconfont icon-calendar1"></i> 日期选择 
+	</span> 
+	<i class="icon iconfont icon-danxian-youjiantou-copy"></i>
+</button> 
+
+<input type="button" class="btn btn-default" id="daterange-btn"   style='width:200px;'/>
+-->
+
+
+<div  id='div1' style="width:500px;height:500px;background-color:#eee;">
+	<input type="text" class="btn btn-default" id="start" />  
+	<input type="text" class="btn btn-default" id="end" />  
+</div>
+
+
+  
+<button type="button" class="btn btn-default" id="daterange-btn"> 
+	<a>
+		<i class="icon iconfont icon-calendar1"></i> 日期选择 
+	</a> 
+	<span style="display:none;">
+		<i class="icon iconfont icon-calendar1"></i> 日期选择 
+	</span> 
+	<i class="icon iconfont icon-danxian-youjiantou-copy"></i>
+</button> 
+
+
+
+
+  <script type="text/javascript">
+ 
+
+   $("#start").bind("click",function(e){
+		$('#daterange-btn').click();
+		$(".daterangepicker").css("top",e.clientY).css("left",e.clientX);
+   });
+   $("#end").bind("click",function(e){
+		$('#daterange-btn').click();
+		$(".daterangepicker").css("top",e.clientY).css("left",e.clientX);
+   });
+    
+
+
+
+
+
+
+
+	$('#daterange-btn').daterangepicker({
+    "showWeekNumbers": true,
+    "timePicker": true,
+    "timePicker24Hour": true,
+}, function(start, end, label) {
+	debugger;
+			//label:通过它来知道用户选择的是什么，传给后台进行相应的展示
+			//      console.log(label)
+			if(label=='全部'){
+				$('#daterange-btn span').html('全部');
+			}else if(label=='今天'){
+				$('#daterange-btn span').html(end.format('YYYY/MM/DD'));
+			}else if(label=='明天'){
+				$('#daterange-btn span').html(start.format('YYYY/MM/DD'));
+			}else if(label=='未来七天'){
+				$('#daterange-btn span').html(start.format('YYYY/MM/DD')+'-'+end.format('YYYY/MM/DD'));
+			}else if(label=='未来30天' || label=='未来31天' || label=='未来32天' || label=='未来33天'){
+				$('#daterange-btn span').html(start.format('YYYY/MM/DD')+'-'+end.format('YYYY/MM/DD'));
+			}else if(label=='未来60天'){
+				$('#daterange-btn span').html(start.format('YYYY/MM/DD')+'-'+end.format('YYYY/MM/DD'));
+			}
+
+			else{
+					alert(start.format('YYYY/MM/DD HH:mm')+'-'+end.format('YYYY/MM/DD HH:mm'));
+					//获得两个日期
+					$("#start").val(start.format('YYYY/MM/DD HH:mm'));
+					$("#end").val(end.format('YYYY/MM/DD HH:mm'));
+			
+			}
+			
+		
+});
+
+
+/*
+    $('#daterange-btn').daterangepicker({
+
+        //ranges: {
+            //'全部': [moment(), moment().subtract(-1, 'days')],
+            //'今天': [moment(), moment()],
+            //'明天': [moment().subtract(-1, 'days'), moment().subtract(-1, 'days')],
+            //'未来七天': [moment(),moment().subtract(-6, 'days')],
+            //'未来30天': [moment(),moment().subtract(-29, 'days')],
+			//'未来31天': [moment(),moment().subtract(-30, 'days')],
+			//'未来32天': [moment(),moment().subtract(-31, 'days')],
+			//'未来33天': [moment(),moment().subtract(-32, 'days')],
+            //'未来60天': [moment(),moment().subtract(-59, 'days'), ]
+        //},
+        startDate: moment(),
+        endDate: moment(),
+		},
+		function(start, end,label) {
+			debugger;
+			//label:通过它来知道用户选择的是什么，传给后台进行相应的展示
+			//      console.log(label)
+			if(label=='全部'){
+				$('#daterange-btn span').html('全部');
+			}else if(label=='今天'){
+				$('#daterange-btn span').html(end.format('YYYY/MM/DD'));
+			}else if(label=='明天'){
+				$('#daterange-btn span').html(start.format('YYYY/MM/DD'));
+			}else if(label=='未来七天'){
+				$('#daterange-btn span').html(start.format('YYYY/MM/DD')+'-'+end.format('YYYY/MM/DD'));
+			}else if(label=='未来30天' || label=='未来31天' || label=='未来32天' || label=='未来33天'){
+				$('#daterange-btn span').html(start.format('YYYY/MM/DD')+'-'+end.format('YYYY/MM/DD'));
+			}else if(label=='未来60天'){
+				$('#daterange-btn span').html(start.format('YYYY/MM/DD')+'-'+end.format('YYYY/MM/DD'));
+			}
+
+			else{
+					//alert(start.format('YYYY/MM/DD')+'-'+end.format('YYYY/MM/DD'));
+					//获得两个日期
+					$("#start").val(start.format('YYYY/MM/DD'));
+					$("#end").val(end.format('YYYY/MM/DD'));
+			
+			}
+			
+		}
+	);
+	*/
+</script> 
+
+ 
+   
+ </body>
+</html>
